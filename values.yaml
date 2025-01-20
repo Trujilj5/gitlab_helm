@@ -48,7 +48,7 @@ global:
     labels: {}
 
   ## https://docs.gitlab.com/charts/installation/deployment#deploy-the-community-edition
-  edition: ee
+  edition: ce
 
   ## https://docs.gitlab.com/charts/charts/globals#gitlab-version
   # gitlabVersion:
@@ -62,12 +62,12 @@ global:
   hosts:
     domain: ionitedev.com
     hostSuffix:
-    https: false
+    https: true
     externalIP: 70.176.22.69
     ssh:
     gitlab: 
       name: git.ionitedev.com
-      https: false
+      https: true
     minio: {}
     registry: {}
     tls: {}
@@ -78,14 +78,14 @@ global:
   ## https://docs.gitlab.com/charts/charts/globals#configure-ingress-settings
   ingress:
     apiVersion: ""
-    configureCertmanager: true
+    configureCertmanager: false
     useNewIngressForCerts: false
     provider: nginx
     # class:
     annotations: {}
     enabled: true
-    tls: {}
-    #   enabled: true
+    tls: 
+      enabled: true
     #   secretName:
     path: /
     pathType: Prefix
@@ -950,7 +950,7 @@ certmanager:
 ## https://docs.gitlab.com/charts/architecture/decisions#nginx-ingress
 ## Installation & configuration of charts/ingress-nginx:
 nginx-ingress: &nginx-ingress
-  enabled: true
+  enabled: false
   tcpExternalConfig: "true"
   controller: &nginx-ingress-controller
     addHeaders:
@@ -1270,8 +1270,8 @@ postgresql:
 ## Installation & configuration charts/registry
 ## https://docs.gitlab.com/charts/architecture/decisions#registry
 ## https://docs.gitlab.com/charts/charts/registry/
-# registry:
-#   enabled: false
+  registry:
+    enabled: false
 
 ## Automatic shared secret generation
 ## https://docs.gitlab.com/charts/installation/secrets
@@ -1398,4 +1398,3 @@ gitlab-zoekt:
       secretName: '{{ include "gitlab.zoekt.indexer.internalApi.secretName" $ }}'
       secretKey: '{{ include "gitlab.zoekt.indexer.internalApi.secretKey" $ }}'
       gitlabUrl: '{{ include "gitlab.zoekt.indexer.internalApi.gitlabUrl" $ }}'
-
