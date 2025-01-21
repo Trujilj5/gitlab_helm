@@ -1,0 +1,10 @@
+[common]
+server_addr = 3.92.221.108
+server_port = 8080
+token = t0ken4c0nnect
+
+[[proxies]]
+name = "proxy1"
+type = "tcp"
+localPort = 80
+remotePort = 5075
