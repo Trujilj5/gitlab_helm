@@ -1,0 +1,28 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: myapp
+  namespace: gitlab
+spec:
+  selector:
+    matchLabels:
+      app: myapp # has to match .spec.template.metadata.labels
+  serviceName: "myapp"
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container:  myapp
+      labels:
+        app: myapp # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: myapp
+        image: test/nginx:1.1.1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+          name: myapp
+ 
